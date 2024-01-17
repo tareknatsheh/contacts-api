@@ -1,8 +1,10 @@
 module.exports.injectDB = ({ dbAdapter }) => {
-    return makeDB = () => {
+    return makeDb = async ({ dbName, collectionName }) => {
+
+        const dbMethods = await dbAdapter({ dbName, collectionName });
+
         return Object.freeze({
-            addContact: ({ name, email}) => dbAdapter.add({ name, email}),
-            getAllContacts: () => dbAdapter.getAll()
-        });
+            addOneContact: (contactObj) => dbMethods.addOneContact(contactObj)
+        })
     }
 }
